@@ -17,3 +17,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Updated the snake animation"
+          branch: output  # Ensure it pushes to `output`
