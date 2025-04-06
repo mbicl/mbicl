@@ -1,38 +1,44 @@
-name: Generate Themed Snake Animation (Dark & Light)
+name: generate animation
 
 on:
+  # run automatically every 24 hours
   schedule:
-    - cron: "0 0 * * *"  # every day at midnight UTC
+    - cron: "0 */24 * * *" 
+  
+  # allows to manually run the job at any time
   workflow_dispatch:
+  
+  # run on every push on the master branch
+  push:
+    branches:
+    - master
+    
+  
 
 jobs:
-  build:
+  generate:
+    permissions: 
+      contents: write
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
     steps:
-      - name: Checkout output branch
-        uses: actions/checkout@v3
-        with:
-          ref: output  # use the branch where SVGs will be saved
-
-      - name: Generate light mode snake
-        uses: DenverCoder1/github-contribution-snake-action@v2.3.0
+      # generates a snake game from a github user (<github_user_name>) contributions graph, output a svg animation at <svg_out_path>
+      - name: generate github-contribution-grid-snake.svg
+        uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          svg_path: github-contribution-grid-snake-light.svg
-          theme: github-light  # Light theme
-          animation_duration: 1200
-          show_icons: false
-
-      - name: Generate dark mode snake
-        uses: DenverCoder1/github-contribution-snake-action@v2.3.0
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+          
+          
+      # push the content of <build_dir> to a branch
+      # the content will be available at https://raw.githubusercontent.com/<github_user>/<repository>/<target_branch>/<file> , or as github page
+      - name: push github-contribution-grid-snake.svg to the output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
-          github_user_name: ${{ github.repository_owner }}
-          svg_path: github-contribution-grid-snake-dark.svg
-          theme: github-dark  # Dark theme
-          animation_duration: 1200
-          show_icons: false
-
-      - name: Commit and push
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Updated dark and light snake animations"
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
