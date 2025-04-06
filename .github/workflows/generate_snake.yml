@@ -1,25 +1,38 @@
-name: Generate Snake Animation
+name: Generate Themed Snake Animation (Dark & Light)
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Runs daily at midnight
+    - cron: "0 0 * * *"  # every day at midnight UTC
   workflow_dispatch:
 
 jobs:
-  generate:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout output branch
         uses: actions/checkout@v3
         with:
-          ref: output  # Checkout the `output` branch
+          ref: output  # use the branch where SVGs will be saved
 
-      - uses: Platane/snk@v3
+      - name: Generate light mode snake
+        uses: DenverCoder1/github-contribution-snake-action@v2.3.0
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: "github-contribution-grid-snake.svg"
+          svg_path: github-contribution-grid-snake-light.svg
+          theme: github-light  # Light theme
+          animation_duration: 1200
+          show_icons: false
+
+      - name: Generate dark mode snake
+        uses: DenverCoder1/github-contribution-snake-action@v2.3.0
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          svg_path: github-contribution-grid-snake-dark.svg
+          theme: github-dark  # Dark theme
+          animation_duration: 1200
+          show_icons: false
 
       - name: Commit and push
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Updated the snake animation"
+          commit_message: "Updated dark and light snake animations"
