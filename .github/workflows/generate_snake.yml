@@ -9,12 +9,17 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout output branch
+        uses: actions/checkout@v3
+        with:
+          ref: output  # Checkout the `output` branch
+
       - uses: Platane/snk@v3
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: "github-contribution-grid-snake.svg"
-      - uses: stefanzweifel/git-auto-commit-action@v4
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Updated the snake animation"
-          branch: output  # Use the correct branch
