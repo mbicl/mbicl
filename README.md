@@ -1,8 +1,8 @@
 [![wakatime](https://wakatime.com/badge/user/734a7a1b-7ef1-4bff-8628-598f2ce17bcd.svg)](https://wakatime.com/@734a7a1b-7ef1-4bff-8628-598f2ce17bcd) \
-![mbicl's github stats](https://github-readme-stats.vercel.app/api?username=mbicl&show_icons=true&theme=tokyonight)
+<!-- ![mbicl's github stats](https://github-readme-stats.vercel.app/api?username=mbicl&show_icons=true&theme=tokyonight)
 ![snake animation](https://raw.githubusercontent.com/mbicl/mbicl/output/github-contribution-grid-snake-dark.svg)
 
-<!-- Here are some ideas to get you started:
+Here are some ideas to get you started:
 
 - 🔭 I’m currently working on ...
 - 🌱 I’m currently learning ...
